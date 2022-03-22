@@ -24,6 +24,20 @@ async function run() {
         const appointmentsCollection = database.collection("appointments");
         const usersCollection = database.collection("users")
         const coustomerReviewCollection = database.collection("review")
+        const doctorsCollections = database.collection("doctors")
+
+
+        /* -----------ADD Doctor && GET Doctor------------ */
+        app.post('/addDoctors', async (req, res) => {
+            const result = await doctorsCollections.insertOne(req.body)
+            res.json(result)
+        })
+
+        app.get('/doctors', async (req, res) => {
+            const result = await doctorsCollections.find({}).toArray()
+            // console.log(result);
+            res.json(result)
+        })
 
         /* --------GET FOR APPOINTMENTS--------- */
         app.get('/services', async (req, res) => {
