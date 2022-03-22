@@ -58,13 +58,11 @@ async function run() {
         })
 
 
-        /*---- my appointment ----*/
-
-        // app.get('/userAppointment', async (req, res) => {
-        //     const email = req.query.email;
-        //     const result = await appointmentsCollection.find({ email: email }).toArray()
-        //     res.send(result)
-        // })
+        /* ====== user review POST API ======== */
+        app.post('/coustomerReview', async (req, res) => {
+            const result = await coustomerReviewCollection.insertOne(req.body);
+            res.send(result)
+        })
 
         app.get('/allAppointments', async (req, res) => {
             const result = await appointmentsCollection.find({}).toArray()
@@ -73,7 +71,7 @@ async function run() {
         })
         /*--------------- update appointment status--------------*/
 
-        app.put('/allAppointments', async (req, res) => {
+        app.put('/allAppointments/:id', async (req, res) => {
             const filter = { _id: ObjectId(req.params.id) }
             const updateDoc = {
                 $set: { status: req.body.status },
@@ -84,7 +82,7 @@ async function run() {
         })
         /*---------------Review update --------------*/
 
-        app.put('/updateReviewStatus', async (req, res) => {
+        app.put('/updateReviewStatus/:id', async (req, res) => {
             const filter = { _id: ObjectId(req.params.id) }
             const updateDoc = {
                 $set: { status: req.body.status },
