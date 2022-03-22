@@ -31,6 +31,10 @@ async function run() {
             // console.log(services);
             res.json(services)
         })
+        app.post('/addServices', async (req, res) => {
+            const services = await serviceCollection.insertOne(req.body)
+            res.json(services)
+        })
 
         //* -------post patient appointment------*//
         app.post('/appointments', async (req, res) => {
@@ -71,13 +75,13 @@ async function run() {
         })
         /*--------------- update appointment status--------------*/
 
-        app.put('/allAppointments/:id', async (req, res) => {
+        app.put('/updateAppoitmentStatus/:id', async (req, res) => {
             const filter = { _id: ObjectId(req.params.id) }
             const updateDoc = {
                 $set: { status: req.body.status },
             };
             const result = await appointmentsCollection.updateOne(filter, updateDoc)
-            // console.log(result);
+            console.log('appoit', result);
             res.send(result)
         })
         /*---------------Review update --------------*/
